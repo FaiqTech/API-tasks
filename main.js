@@ -324,6 +324,10 @@
 // }
 
 //*GET
+//!GET sorğusunda məlumatlar URL query string-ləri vasitəsilə göndərilir,
+//!buna görə də headers və body hissələri adətən istifadə edilmir.
+//!GET sorğusunda xüsusi header-lərə ehtiyac varsa (məsələn, autentifikasiya tokenləri və ya
+//!digər xüsusi header-lər), onları sorğuya əlavə edə bilərsiniz:
 //*https://api.newtimes.az/api/dashboard/tags/index?page=1&limit=10
 
 // async function getTags(page = 1, limit = 10) {
@@ -348,6 +352,8 @@
 // getTags();
 
 //*POST
+//!PUT və POST sorğularında məlumatlar body hissəsində göndərilir və JSON formatında olmalıdırsa,
+//! Content-Type headeri və JSON.stringify metodundan istifadə olunur.
 //*https://api.newtimes.az/api/dashboard/tags/store
 
 // async function createTag(name) {
@@ -381,6 +387,7 @@
 // createTag(name);
 
 //*DELETE
+//!DELETE sorğusunda headers və body hissələrinə ehtiyac yoxdur.Əsas URL və metod kifayətdir:
 //*name: "TTT"
 //*https://api.newtimes.az/api/dashboard/tags/delete/51
 
@@ -405,8 +412,12 @@
 
 // // Bu funksiyanı istifadə edərək tag silə bilərsiniz
 // const tagId = 51; // Bu dəyəri seçdiyiniz tag id-si ilə əvəz edin
+// Funksiyanı çağırırıq və silinəcək tagın ID-sini göndəririk
 // deleteTag(tagId);
 
+//*PUT
+//!PUT və POST sorğularında məlumatlar body hissəsində göndərilir və JSON formatında olmalıdırsa,
+//! Content-Type headeri və JSON.stringify metodundan istifadə olunur.
 //*https://api.newtimes.az/api/dashboard/tags/update/51
 //*Name göndərmək lazımdır
 //*51in yerində isə seçdiyiniz tagin idsi olmalıdı
@@ -415,14 +426,14 @@
 //   const BASE_URL = `https://api.newtimes.az/api/dashboard/tags/update/${tagId}`;
 
 //   const data = {
-//     Name: name,
+//     Name: name,   // Göndərmək istədiyiniz məlumatı JSON obyektində saxlayırıq
 //   };
 
 //   try {
 //     const response = await fetch(BASE_URL, {
 //       method: "PUT", // Metod PUT olaraq təyin edilir
 //       headers: {
-//         "Content-Type": "application/json", // Headerdə JSON formatını göstəririk
+//         "Content-Type": "application/json",  // Məzmun növünü JSON olaraq təyin edirik
 //       },
 //       body: JSON.stringify(data), // Göndərilən məlumatları JSON formatında stringə çeviririk
 //     });
@@ -441,4 +452,5 @@
 // const tagId = XX;
 // const name = "Yeni Tag Adı";
 
+// Funksiyanı çağırırıq və yenilənəcək tagın ID-sini və yeni adını göndəririk
 // updateTag(tagId, name);
