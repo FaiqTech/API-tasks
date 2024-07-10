@@ -20,7 +20,7 @@
 //   }
 // }
 
-//* GitHub istifadəçi məlumatlarını gətirmək üçün funksiya
+// //* GitHub istifadəçi məlumatlarını gətirmək üçün funksiya
 
 // async function githubKullaniciGetir() {
 //   const kullaniciAdi = document.getElementById("kullaniciAdi").value; // İstifadəçinin daxil etdiyi GitHub istifadəçi adı
@@ -40,6 +40,29 @@
 //       ).innerText = `Ad: ${ad}, İzləyici: ${takipci}, Repo: ${repolar}`; // Məlumatları ekrana yaz
 //     } else {
 //       document.getElementById("sonuc").innerText = "İstifadəçi tapılmadı."; // İstifadəçi tapılmazsa
+//     }
+//   } catch (error) {
+//     document.getElementById("sonuc").innerText = "Bir xəta baş verdi."; // Xəta olduqda
+//   }
+// }
+//* GitHub istifadəçi məlumatlarını gətirmək üçün funksiya axios ilə arrow function ilə yazılmış
+
+// async function githubKullaniciGetir() {
+//   const kullaniciAdi = document.getElementById("kullaniciAdi").value; // İstifadəçinin daxil etdiyi GitHub istifadəçi adı
+//   const url = `https://api.github.com/users/${kullaniciAdi}`;
+
+//   try {
+//     const response = await axios.get(url); // URL-dən məlumatları gətir
+//     const data = response.data; // Gələn cavabı JSON formatına çevir
+
+//     if (response.status === 200) {
+//       const ad = data.name || "Ad məlum deyil"; // Ad məlumatı
+//       const takipci = data.followers; // İzləyici sayı
+//       const repolar = data.public_repos; // İctimai repo sayı
+
+//       document.getElementById(
+//         "sonuc"
+//       ).innerText = `Ad: ${ad}, İzləyici: ${takipci}, Repo: ${repolar}`; // Məlumatları ekrana yaz
 //     }
 //   } catch (error) {
 //     document.getElementById("sonuc").innerText = "Bir xəta baş verdi."; // Xəta olduqda
@@ -111,26 +134,28 @@
 // }
 
 //* Ülke məlumatlarını gətirmək üçün funksiya
-
 // async function ulkeBilgiGetir() {
 //   const ulkeAdi = document.getElementById("ulkeAdi").value; // İstifadəçinin daxil etdiyi ülke adı
 //   const url = `https://restcountries.com/v3.1/name/${ulkeAdi}`;
 
 //   try {
-//     const response = await fetch(url); // URL-dən məlumatları gətir
-//     const data = await response.json(); // Gələn cavabı JSON formatına çevir
+//     const response = await axios.get(url); // URL-dən məlumatları gətir
+//     const data = response.data;
 
-//     if (data.status !== 404) {
-//       const ulke = data[0]; // İlk ölkə məlumatları
-//       const ad = ulke.name.common; // Ülke adı
-//       const nufus = ulke.population; // Ülke nufusu
-//       const bayrak = ulke.flags.png; // Ülke bayrağı URL
+//     if (response.status !== 404) {
+//       const [
+//         {
+//           name: { common: ad },
+//           population: nufus,
+//           flags: { png: bayrak },
+//         },
+//       ] = data;
 
 //       document.getElementById("sonuc").innerHTML = `
-//                 <p>Ad: ${ad}</p>
-//                 <p>Nüfus: ${nufus}</p>
-//                 <img src="${bayrak}" alt="${ad} bayrağı" style="width:100px;">
-//             `; // Məlumatları ekrana yaz
+//         <p>Ad: ${ad}</p>
+//         <p>Nüfus: ${nufus}</p>
+//         <img src="${bayrak}" alt="${ad} bayrağı" style="width:100px;">
+//       `; // Məlumatları ekrana yaz
 //     } else {
 //       document.getElementById("sonuc").innerText = "Ülke tapılmadı."; // Ülke tapılmazsa
 //     }
@@ -454,3 +479,19 @@
 
 // Funksiyanı çağırırıq və yenilənəcək tagın ID-sini və yeni adını göndəririk
 // updateTag(tagId, name);
+
+// const apiUrl = "https://official-joke-api.appspot.com/random_joke";
+
+// // Təsadüfi zarafatı əldə et və göstər
+// const getRandomJoke = async () => {
+//   try {
+//     const response = await axios.get(apiUrl);
+//     const jokeDiv = document.getElementById("joke");
+//     jokeDiv.innerHTML = `
+//       <p>${response.data.setup}</p>
+//       <p><strong>${response.data.punchline}</strong></p>
+//     `;
+//   } catch (error) {
+//     console.error("Veri alınamadı:", error);
+//   }
+// };
